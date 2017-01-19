@@ -1,8 +1,7 @@
 # Object Tracker
 # Goal is to build the ultimate object tracker for vehicles, people, signs and other relevant information
 
-
-class Vehicle:
+class Object:
     def __init__(self,position):
         self.position = position
         self.new_postion = None
@@ -29,6 +28,20 @@ class Vehicle:
 
         return self.new_postion, self.flag
 
+
+
+
+class Vehicle(Object):
+     def __init__(self, position):
+        Object.__init__(self, position)
+
+class Person(Object):
+    def __init__(self, position):
+        Object.__init__(self, position)
+
+class Sign(Object):
+    def __init__(self, position):
+        Object.__init__(self, position)
 
 
 
