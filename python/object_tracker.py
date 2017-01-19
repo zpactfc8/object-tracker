@@ -29,8 +29,6 @@ class Object:
         return self.new_postion, self.flag
 
 
-
-
 class Vehicle(Object):
      def __init__(self, position):
         Object.__init__(self, position)
@@ -48,19 +46,14 @@ class Sign(Object):
 # Takes in a list of calclulated centroids calculated from current framefrom your own code  (both good and bad)
 
 # Deal with car tracking
-if len(cars)==0:
-    for centroid in img_centroids:
-            cars.append(Vehicle(centroid))
-
-else:
-    for centroid in img_centroids:
-        new = True
-        for car in cars:
-            new = car.update(centroid)
-            if new == False:
-                break
-        if new == True:
-            cars.append(Vehicle(centroid))
+for centroid in img_centroids:
+    new = True
+    for car in cars:
+        new = car.update(centroid)
+        if new == False:
+            break
+    if new == True:
+        cars.append(Vehicle(centroid))
 
 
 next_cars = []
@@ -74,7 +67,7 @@ for car in cars:
 
 cars = next_cars
 
-# Outputs current relevant positions. 
+# Outputs current relevant positions.
 
 try:
     for (x1, y1, x2, y2) in positions:
