@@ -8,22 +8,29 @@ class Object:
         self.count = 0
         self.frame = 1
         self.flag = False
+        self.occurrence = 0
+        self.postion_average = []
 
     def update(self,temp_position):
-        if abs(temp_position[0]-self.position[0]) < 50 and abs(temp_position[1]-self.position[1]) < 50:
+        if abs(temp_position[0]-self.position[0]) < 100 and abs(temp_position[1]-self.position[1]) < 100:
             self.position = temp_position
+            self.postion_average.append(temp_position)
             self.count+=1
+            self.occurrence += 1
             return False
         else:
             return True
 
     def get_position(self):
         self.frame+=1
-        if self.count == 3:
-            self.new_postion = self.position
+        if self.count == 5:
+            self.new_postion = np.mean(np.array(self.postion_average), axis=0)
             self.count = 0
             self.frame = 1
-        if self.frame > 10:
+            self.postion_average = []
+        if self.occurrence > 8:
+            self.new_postion = self.position
+        if self.frame > 50:
             self.flag = True
 
         return self.new_postion, self.flag
@@ -40,6 +47,12 @@ class Person(Object):
 class Sign(Object):
     def __init__(self, position):
         Object.__init__(self, position)
+        self.label = None
+        run_network()
+    def run_network(self):
+        # Crop out position and run through sign network
+        # update self.label
+
 
 
 
