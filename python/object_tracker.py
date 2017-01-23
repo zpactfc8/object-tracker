@@ -8,15 +8,13 @@ class Object:
         self.count = 0
         self.frame = 1
         self.flag = False
-        self.occurrence = 0
         self.postion_average = []
 
     def update(self,temp_position):
-        if abs(temp_position[0]-self.position[0]) < 100 and abs(temp_position[1]-self.position[1]) < 100:
+        if abs(temp_position[0]-self.position[0]) < 150 and abs(temp_position[1]-self.position[1]) < 150:
             self.position = temp_position
             self.postion_average.append(temp_position)
             self.count+=1
-            self.occurrence += 1
             return False
         else:
             return True
@@ -28,9 +26,7 @@ class Object:
             self.count = 0
             self.frame = 1
             self.postion_average = []
-        if self.occurrence > 8:
-            self.new_postion = self.position
-        if self.frame > 50:
+        if self.frame > 25:
             self.flag = True
 
         return self.new_postion, self.flag
@@ -56,7 +52,7 @@ class Sign(Object):
 
 
 
-# Takes in a list of calclulated centroids calculated from current framefrom your own code  (both good and bad)
+# Takes in a list of calclulated centroids calculated from current frame from your own code  (both good and bad)
 
 # Deal with car tracking
 for centroid in img_centroids:
