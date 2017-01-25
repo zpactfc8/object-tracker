@@ -17,6 +17,7 @@ class Object:
                 self.postion_average.pop(0)
                 self.postion_average.append(temp_position)
                 self.new_postion = np.mean(np.array(self.postion_average), axis=0).astype(int)
+                self.position = self.new_postion
                 self.frame = 1
                 self.count += 1
 
