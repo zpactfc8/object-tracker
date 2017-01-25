@@ -13,27 +13,35 @@ class Object:
 
     def update(self,temp_position):
         if abs(temp_position[2]-self.position[2]) < 100 and abs(temp_position[3]-self.position[3]) < 100:
+            if self.long_count > 3:
+                self.postion_average.pop(0)
+                self.postion_average.append(temp_position)
+                self.new_postion = np.mean(np.array(self.postion_average), axis=0).astype(int)
+                self.frame = 1
+                self.count += 1
+
+                return False
+
             self.position = temp_position
             self.postion_average.append(temp_position)
             self.count+=1
-            if self.long_count > 3:
-                self.new_postion = np.mean(np.array(self.postion_average), axis=0)
-                self.new_postion = self.new_postion.astype(int)
+
             return False
+
         else:
             return True
 
     def get_position(self):
         self.frame+=1
-        if self.count == 5:
-            self.new_postion = np.mean(np.array(self.postion_average), axis=0)
-            self.new_postion = self.new_postion.astype(int)
+        if self.count == 5 and self.long_count < 4 :
+            self.new_postion = np.mean(np.array(self.postion_average), axis=0).astype(int)
             self.count = 0
             self.frame = 1
             self.long_count += 1
-            self.postion_average = []
+            if self.long_count < 3:
+                self.postion_average = []
 
-        if self.frame > 15:
+        if self.frame > 10:
             self.flag = True
 
         return self.new_postion, self.flag
