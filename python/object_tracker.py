@@ -8,13 +8,17 @@ class Object:
         self.count = 0
         self.frame = 1
         self.flag = False
+        self.long_count = 0
         self.postion_average = []
 
     def update(self,temp_position):
-        if abs(temp_position[0]-self.position[0]) < 150 and abs(temp_position[1]-self.position[1]) < 150:
+        if abs(temp_position[2]-self.position[2]) < 100 and abs(temp_position[3]-self.position[3]) < 100:
             self.position = temp_position
             self.postion_average.append(temp_position)
             self.count+=1
+            if self.long_count > 3:
+                self.new_postion = np.mean(np.array(self.postion_average), axis=0)
+                self.new_postion = self.new_postion.astype(int)
             return False
         else:
             return True
@@ -23,13 +27,20 @@ class Object:
         self.frame+=1
         if self.count == 5:
             self.new_postion = np.mean(np.array(self.postion_average), axis=0)
+            self.new_postion = self.new_postion.astype(int)
             self.count = 0
             self.frame = 1
+            self.long_count += 1
             self.postion_average = []
-        if self.frame > 25:
+
+        if self.frame > 15:
             self.flag = True
 
         return self.new_postion, self.flag
+
+class Vehicle(Object):
+     def __init__(self, position):
+        Object.__init__(self, position)
 
 
 class Vehicle(Object):
@@ -63,7 +74,6 @@ for centroid in img_centroids:
             break
     if new == True:
         cars.append(Vehicle(centroid))
-
 
 next_cars = []
 positions = []
