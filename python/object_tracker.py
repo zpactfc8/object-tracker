@@ -1,6 +1,11 @@
 # Object Tracker
 # Goal is to build the ultimate object tracker for vehicles, people, signs and other relevant information
 
+##### Globals needed ######
+global cars
+###########################
+
+
 class Object:
     def __init__(self,position):
         self.position = position
@@ -51,11 +56,6 @@ class Vehicle(Object):
      def __init__(self, position):
         Object.__init__(self, position)
 
-
-class Vehicle(Object):
-     def __init__(self, position):
-        Object.__init__(self, position)
-
 class Person(Object):
     def __init__(self, position):
         Object.__init__(self, position)
@@ -72,7 +72,7 @@ class Sign(Object):
 
 
 
-# Takes in a list of calclulated centroids calculated from current frame from your own code  (both good and bad)
+# Takes in a list of calculated centroids calculated from current frame from your own code  (both good and bad)
 
 # Deal with car tracking
 for centroid in img_centroids:
